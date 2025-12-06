@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PoC Chrome</title>
+
+  <style>
+    /* OS fingerprinting 조건 분기 */
+    #calcWindows { display: none; }
+
+    @media (min-width: 1000px) {
+      #calcWindows { display: block; }
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Chrome Fingerprinting PoC</h1>
+
+  <img
+    id="calcWindows"
+    src="{{serverDomain}}/image?id={{id}}&os=windows11&client=chrome"
+    loading="lazy"
+  />
+
+  <script>
+    console.log("PoC 페이지 로드됨! page id =", "{{id}}");
+
+    // 부모 iframe에 결과 전송
+    window.parent.postMessage({
+      type: "poc-result",
+      result: { status: "loaded", id: "{{id}}" }
+    }, "*");
+  </script>
+</body>
+</html>
